@@ -57,7 +57,8 @@ module "blog_sg" {
 }
 
 module "alb" {
-  source = "terraform-aws-modules/alb/aws"
+  source  = "terraform-aws-modules/alb/aws"
+  version = "~> 6.0"
 
   name    = "blog-alb"
   load_balancer_type = "application"
@@ -66,8 +67,8 @@ module "alb" {
   subnets = module.blog_vpc.public_subnets
   security_groups = module.blog_sg.security_group_id
 
-  target_groups = {
-    ex-instance = {
+  target_groups = [
+    {
       name_prefix      = "blog-"
       protocol         = "HTTP"
       port             = 80
@@ -79,7 +80,7 @@ module "alb" {
         }
       }
     }
-  }
+  ]
 
   listeners = {
     ex-http-https-redirect = {
