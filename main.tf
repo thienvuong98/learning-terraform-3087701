@@ -10,7 +10,6 @@ data "aws_ami" "app_ami" {
     name   = "virtualization-type"
     values = ["hvm"]
   }
-
   owners = ["979382823631"] # Bitnami
 }
 
